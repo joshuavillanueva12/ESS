@@ -1,0 +1,64 @@
+<!-- FILE: index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Admin / Cashier</title>
+  <!-- Link to external CSS file (styles.css) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1 class="brand" style="display: none;">Department Store System</h1>
+
+    <div class="card">
+       <img src="https://github.com/Raltom1/ESS/blob/main/logo1.png?raw=true" alt="Store Logo" class="logo">
+      <div class="switcher">
+        <button id="adminBtn" class="switch active">Admin Login</button>
+        <button id="cashierBtn" class="switch">Cashier Login</button>
+      </div>
+
+      <!-- Admin login form -->
+      <form id="adminForm" class="login-form" action="#" method="post">
+        <h2>Admin</h2>
+        <label for="adminUser">Username</label>
+        <input id="adminUser" name="username" type="text" placeholder="username" required>
+
+        <label for="adminPass">Password</label>
+        <input id="adminPass" name="password" type="password" placeholder="password" required>
+
+        <div class="row" style="display: none;">
+          <label class="checkbox">
+            <input type="checkbox" name="remember"> Remember me
+          </label>
+        </div>
+
+        <button type="submit" class="btn">Sign in as Admin</button>
+      </form>
+
+      <!-- Cashier login form -->
+      <form id="cashierForm" class="login-form hidden" action="#" method="post">
+        <h2>Cashier</h2>
+
+        <label for="cashierId">Cashier ID</label>
+        <input id="cashierId" name="cashier_id" type="text" placeholder="e.g. CSH-001" required>
+
+        <label for="cashierPin">4-digit PIN</label>
+        <input id="cashierPin" name="pin" type="password" minlength="4" maxlength="4" placeholder="••••" required>
+
+        <div class="row note" style="display: none;">If you are using a shared terminal, do not check "Remember me".</div>
+
+        <button type="submit" class="btn">Sign in as Cashier</button>
+      </form>
+
+    </div>
+
+    <footer class="small">&copy; <span id="year"></span> Department Store</footer>
+  </main>
+
+  <script src="script.js"></script> 
+</body>
+</html>
+
+

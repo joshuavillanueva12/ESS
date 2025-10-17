@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style-admin.css">
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="logo-area">
+      <img src="https://github.com/Raltom1/ESS/blob/main/logo1.png?raw=true" alt="Logo" class="logo">
+      <h2>Admin Panel</h2>
+    </div>
+
+    <ul class="nav-links">
+      <li><button class="nav-btn" id="stocksBtn">📦 Product Stocks</button></li>
+      <li><button class="nav-btn" id="cashiersBtn">👨‍💼 Cashier Employees</button></li>
+      <li><button class="nav-btn logout" id="logoutBtn">🚪 Logout</button></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <header>
+      <h1 id="pageTitle">Welcome, Admin</h1>
+    </header>
+
+    <section id="displayArea">
+      <p>Select a section from the sidebar to view details.</p>
+    </section>
+  </main>
+
+  <script src="script-admin.js"></script>
+</body>
+</html>

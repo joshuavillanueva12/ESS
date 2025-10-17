@@ -1,0 +1,128 @@
+/* FILE: styles.css */
+/* Keep this file separate and link it from index.html */
+:root{
+  --bg: #f3f6fb;
+  --card: #ffffff;
+  --accent: #2563eb;
+  --muted: #6b7280;
+  --radius: 10px;
+  --shadow: 0 6px 18px rgba(16,24,40,0.06);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+*{box-sizing:border-box}
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg), #eef2ff);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  position: relative; /* kailangan para sa ::before */
+  overflow: hidden;
+}
+
+/* background image with blur effect */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://github.com/Raltom1/ESS/blob/main/bg.png?raw=true') center/cover no-repeat;
+  filter: blur(10px);
+  z-index: -1; /* para di matabunan ang content */
+  transform: scale(1.1); /* para hindi makita ang gilid ng blur */
+}
+
+
+.container{
+  width:100%;
+  max-width:420px;
+  text-align:center;
+}
+.brand{
+  margin:0 0 14px 0;
+  font-size:20px;
+  color:var(--accent);
+}
+.card {
+  background: rgba(255, 255, 255, 0.25); /* puting background na may transparency */
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 22px;
+  backdrop-filter: blur(10px); /* glass-like blur effect */
+  -webkit-backdrop-filter: blur(10px); /* support for Safari */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border for visibility */
+}
+
+.switcher{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  margin-bottom:12px;
+}
+.switch{
+  flex:1;
+  border:1px solid #000000;
+  padding:8px 10px;
+  border-radius:8px;
+  background:transparent;
+  cursor:pointer;
+}
+.switch.active{
+  background:linear-gradient(90deg, rgba(27, 254, 61, 0.152), rgba(24, 113, 255, 0.185));
+  border-color:rgba(37,99,235,0.25);
+}
+
+.login-form{
+  text-align:left;
+}
+.login-form h2{
+  margin:6px 0 12px 0;
+  font-size:18px;
+}
+label{display:block;margin-bottom:6px;color:var(--muted);font-size:13px}
+input[type="text"], input[type="password"]{
+  width:100%;
+  padding:10px 12px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:1px solid #e6eefc;
+  outline:none;
+  font-size:14px;
+}
+input:focus{box-shadow:0 0 0 4px rgba(37,99,235,0.06)}
+
+.row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.checkbox{font-size:13px;color:var(--muted)}
+.btn{
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:none;
+  background:var(--accent);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn:active{transform:translateY(1px)}
+.hidden{display:none}
+.small{font-size:12px;color:var(--muted);margin-top:12px}
+.note{font-size:13px;color:var(--muted);padding-bottom:8px}
+
+/* Responsive tweaks */
+@media (max-width:420px){
+  .card{padding:16px}
+}
+.logo {
+  width: 400px;             /* laki ng logo */
+  height: auto;
+  display: block;
+  margin: 0 auto 14px;     /* gitna at may kaunting space sa baba */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  user-select: none;
+}
+
