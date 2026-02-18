@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>   // for sleep()
+
+#define MAX_ATTEMPTS 5
+#define LOCK_TIME 30   // seconds
+
+// Simple hash function (for demo purposes)
+unsigned long simpleHash(char *str) {
+    unsigned long hash = 5381;
+    int c;
+    while ((c = *str++))
+        hash = ((hash << 5) + hash) + c; // hash * 33 + c
+    return hash;
+}
+
+int main() {
+    char password[100];
+    int attempts = 0;
+    time_t lockStart = 0;
+
+    // Store hashed password instead of plain text
+    unsigned long storedHash = simpleHash("StrongPassword123!");
+
+    while (1) {
+
+        // Check if locked
+        if (attempts >= MAX_ATTEMPTS) {
+            printf("\nToo many failed attempts!\n");
+            printf("Account locked for %d seconds...\n", LOCK_TIME);
+            sleep(LOCK_TIME);
+            attempts = 0;  // Reset attempts after lock
+        }
+
+        printf("\nEnter password: ");
+        scanf("%s", password);
+
+        unsigned long inputHash = simpleHash(password);
+
+        if (inputHash == storedHash) {
+            printf("Login successful!\n");
+            break;
+        } else {
+            printf("Wrong password!\n");
+            attempts++;
+        }
+    }
+
+    return 0;
+}
