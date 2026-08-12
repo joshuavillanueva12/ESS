@@ -1,0 +1,25 @@
+-- Student → Program
+ ALTER TABLE tbl_student
+ ADD CONSTRAINT fk_student_program
+ FOREIGN KEY (ProgramID) REFERENCES tbl_program(ProgramID)
+ ON UPDATE CASCADE ON DELETE RESTRICT;
+ -- Course → Department
+ ALTER TABLE tbl_course
+ ADD CONSTRAINT fk_course_dept
+ FOREIGN KEY (DepartmentID) REFERENCES tbl_department(DepartmentID)
+ ON UPDATE CASCADE ON DELETE RESTRICT;
+ -- Course → Instructor
+ ALTER TABLE tbl_course
+ ADD CONSTRAINT fk_course_instructor
+ FOREIGN KEY (InstructorID) REFERENCES tbl_instructor(InstructorID)
+ ON UPDATE CASCADE ON DELETE RESTRICT;
+ -- Enrollment → Student
+ ALTER TABLE tbl_enrollment
+ ADD CONSTRAINT fk_enroll_student
+ FOREIGN KEY (StudentID) REFERENCES tbl_student(StudentID)
+ ON UPDATE CASCADE ON DELETE CASCADE;
+ -- Enrollment → Course
+ ALTER TABLE tbl_enrollment
+ ADD CONSTRAINT fk_enroll_course
+ FOREIGN KEY (CourseID) REFERENCES tbl_course(CourseID)
+ ON UPDATE CASCADE ON DELETE CASCADE;
