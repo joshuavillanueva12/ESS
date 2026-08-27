@@ -1,0 +1,43 @@
+Sample Input
+ 
+Enter total population: 1000
+Enter initial infected individuals: 5
+Enter infection rate (0-1): 0.30
+Enter recovery rate (0-1): 0.10
+Enter number of simulation days: 60
+ 
+ 
+ 
+Sample Output (First Few Days)
+ 
+DAY SUSCEPTIBLE INFECTED RECOVERED
+ 
+0   995     5       0
+ 
+ 
+ 
+# SIMULATION
+ 
+-------------------------------------------------------
+ 
+for day in range(1, days + 1):
+ 
+new_infections = infection_rate * S * I / population
+new_recoveries = recovery_rate * I
+ 
+S = S - new_infections
+I = I + new_infections - new_recoveries
+R = R + new_recoveries
+ 
+susceptible.append(S)
+infected.append(I)
+recovered.append(R)
+day_list.append(day)
+ 
+print(f"{day}\t{S:.0f}\t{I:.0f}\t{R:.0f}")
+ 
+-------------------------------------------------------
+ 
+FINAL RESULTS
+ 
+-------------------------------------------------------
