@@ -1,0 +1,75 @@
+python
+  
+# USER INPUT
+# -------------------------------------------------------
+population = int(input("Enter total population: "))
+initial_infected = int(input("Enter initial infected individuals: "))
+infection_rate = float(input("Enter infection rate (0-1): "))
+recovery_rate = float(input("Enter recovery rate (0-1): "))
+days = int(input("Enter number of simulation days: "))
+
+# -------------------------------------------------------
+
+S = population - initial_infected
+I = initial_infected
+R = 0
+
+susceptible = [S]
+infected = [I]
+recovered = [R]
+
+day_list = [0]
+
+print("\nDAY\tSUSCEPTIBLE\tINFECTED\tRECOVERED")
+print("-" * 55)
+print(f"{0}\t{S:.0f}\t\t{I:.0f}\t\t{R:.0f}")
+
+# -------------------------------------------------------
+# SIMULATION
+# -------------------------------------------------------
+for day in range(1, days + 1):
+
+    new_infections = infection_rate * S * I / population
+    new_recoveries = recovery_rate * I
+
+    S = S - new_infections
+    I = I + new_infections - new_recoveries
+    R = R + new_recoveries
+
+    susceptible.append(S)
+    infected.append(I)
+    recovered.append(R)
+    day_list.append(day)
+
+    print(f"{day}\t{S:.0f}\t\t{I:.0f}\t\t{R:.0f}")
+
+# -------------------------------------------------------
+# FINAL RESULTS
+# -------------------------------------------------------
+print("\nSimulation Complete")
+print(f"Remaining Susceptible: {S:.0f}")
+print(f"Currently Infected: {I:.0f}")
+print(f"Recovered: {R:.0f}")
+
+# -------------------------------------------------------
+# PLOT RESULTS
+# -------------------------------------------------------
+plt.figure(figsize=(10, 6))
+
+plt.plot(day_list, susceptible, label="Susceptible")
+plt.plot(day_list, infected, label="Infected")
+plt.plot(day_list, recovered, label="Recovered")
+
+plt.title("SIR Epidemic Spread Simulation")
+plt.xlabel("Days")
+plt.ylabel("Number of People")
+plt.legend()
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+ 
+ 
+ 
+ 
+Note: Don’t forget to add  import matplotlib.pyplot as plt  at the very top of your file so the plotting works! ✅
