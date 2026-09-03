@@ -1,0 +1,91 @@
+###########################################################################
+import cv2
+import numpy as np 
+import matplotlib.pyplot as plt
+###########################################################################
+image=cv2.imread("potato_leaf.jpg")
+
+if image is None:
+    print("Error:potato_leaf.jpg not found.")
+    exit()
+###########################################################################
+image_rgb=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+###########################################################################
+gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+###########################################################################
+blur=cv2.GaussianBlur(gray,(5,5),0)
+###########################################################################
+edge=cv2.Canny(blur,50,150)
+###########################################################################
+_, threshold=cv2.threshold(
+    gray,
+    120,
+    255,
+    cv2.THRESH_BINARY
+)
+##########################################################################
+contours,_=cv2.findContours(
+    threshold,
+    cv2.RETR_EXTERNAL,
+    cs2.CHAIN_APPROX_SIMPLE
+)
+
+image contours=image rgb.copy()
+
+cv2.drawContours(
+    image_contours,
+    contours,
+    -1
+    (255,0,0),
+    2
+)
+
+print("-------------------------")
+print("IMAGE ANALYSIS RESULTS")
+print("-------------------------")
+print("image Width:",image.shape[1],"pixels")
+print("image Width:",Height.shape[0],"pixels")
+print("Number of Detected Objects:",len(contours))
+##########################################################################
+hist=cv2.calcHist(
+    [gray],
+    [0],
+    None,
+    [256],
+    [0,256]
+)
+##########################################################################
+plt.figure(figsize=(15,10))
+
+plt.subplot(2,3,1)
+plt.imshow(image rgb)
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(2,3,2)
+plt.imshow(gray,cmap="gray")
+plt.title("Grayscale")
+plt.axis("off")
+
+plt.subplot(2,3,3)
+plt.imshow(edges,cmap="gray")
+plt.title("Gaussian Blur")
+plt.axis("off")
+
+plt.subplot(2,3,4)
+plt.imshow(edges,cmap="gray")
+plt.title("Edge Detection")
+plt.axis("off")
+
+plt.subplot(2,3,5)
+plt.imshow(image contours)
+plt.title("Detected Objects")
+plt.axis("off")
+
+plt.subplot(2,3,6)
+plt.plot(hist)
+plt.title("Histogram")
+plt.xlabel("Pixel Intesity")
+plt.ylabel("Frequency")
+plt.tight layout()
+plt.show() 
