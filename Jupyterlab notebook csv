@@ -1,0 +1,103 @@
+Python Source Code
+# ============================================================
+# K-Means Clustering for Scientific Data
+# Computational Science Laboratory
+# ============================================================
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
+# ------------------------------------------------------------
+# LOAD DATASET
+# ------------------------------------------------------------
+
+data = pd.read_csv("scientific_data.csv")
+
+print("\nDataset")
+print(data)
+
+# ------------------------------------------------------------
+# SELECT FEATURES
+# ------------------------------------------------------------
+
+X = data[['Temperature', 'pH']]
+
+# ------------------------------------------------------------
+# CREATE K-MEANS MODEL
+# ------------------------------------------------------------
+
+k = int(input("Enter the number of clusters (K): "))
+
+model = KMeans(
+    n_clusters=k,
+    random_state=42,
+    n_init=10
+)
+
+# ------------------------------------------------------------
+# FIT MODEL
+# ------------------------------------------------------------
+
+data['Cluster'] = model.fit_predict(X)
+
+# ------------------------------------------------------------
+# CENTROIDS
+# ------------------------------------------------------------
+
+centroids = model.cluster_centers_
+
+print("\nCluster Centers")
+print("-----------------------------")
+
+for i, center in enumerate(centroids):
+    print(f"Cluster {i}: Temperature={center[0]:.2f}, pH={center[1]:.2f}")
+
+# ------------------------------------------------------------
+# SILHOUETTE SCORE
+# ------------------------------------------------------------
+
+score = silhouette_score(X, data['Cluster'])
+
+print(f"\nSilhouette Score : {score:.3f}")
+
+# ------------------------------------------------------------
+# DISPLAY CLUSTERED DATA
+# ------------------------------------------------------------
+
+print("\nCluster Assignments")
+print(data)
+
+# ------------------------------------------------------------
+# VISUALIZATION
+# ------------------------------------------------------------
+
+plt.figure(figsize=(8,6))
+
+scatter = plt.scatter(
+    data['Temperature'],
+    data['pH'],
+    c=data['Cluster'],
+    s=120
+)
+
+plt.scatter(
+    centroids[:,0],
+    centroids[:,1],
+    marker='X',
+    s=300,
+    color='red',
+    label='Centroids'
+)
+
+plt.xlabel("Temperature (°C)")
+plt.ylabel("pH")
+
+plt.title("K-Means Clustering")
+
+plt.grid(True)
+
+plt.legend()
+
+plt.show()
