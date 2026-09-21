@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal & Dashboard</title>
+  
+  <!-- Font Awesome Icons & Chart.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- AUTH SCREEN -->
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <h1>Academia.</h1>
+          <p>Student Portal</p>
+        </div>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-target="loginForm">Login</button>
+        <button class="auth-tab" data-auth-target="registerForm">Register</button>
+      </div>
+
+      <form id="loginForm" class="auth-form active">
+        <div class="auth-heading">
+          <h2>Welcome back</h2>
+          <p>Sign in to continue to your student dashboard.</p>
+        </div>
+
+        <label for="loginEmail">Email</label>
+        <div class="auth-input">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="loginEmail" placeholder="student@example.com" required>
+        </div>
+
+        <label for="loginPassword">Password</label>
+        <div class="auth-input">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+          <button type="button" class="password-toggle" data-password="loginPassword" aria-label="Show password">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+
+        <button type="submit" class="auth-submit">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login
+        </button>
+
+        <p class="auth-message" id="loginMessage"></p>
+        <p class="demo-hint">Demo account: <strong>student@academia.com</strong> / <strong>123456</strong></p>
+      </form>
+
+      <form id="registerForm" class="auth-form">
+        <div class="auth-heading">
+          <h2>Create account</h2>
+          <p>Register a student account to access the dashboard.</p>
+        </div>
+
+        <label for="registerName">Full Name</label>
+        <div class="auth-input">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="registerName" placeholder="Your full name" required>
+        </div>
+
+        <label for="registerEmail">Email</label>
+        <div class="auth-input">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="registerEmail" placeholder="student@example.com" required>
+        </div>
+
+        <label for="registerPassword">Password</label>
+        <div class="auth-input">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="registerPassword" placeholder="At least 6 characters" minlength="6" required>
+          <button type="button" class="password-toggle" data-password="registerPassword" aria-label="Show password">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+
+        <label for="registerConfirmPassword">Confirm Password</label>
+        <div class="auth-input">
+          <i class="fa-solid fa-shield-halved"></i>
+          <input type="password" id="registerConfirmPassword" placeholder="Repeat your password" minlength="6" required>
+        </div>
+
+        <button type="submit" class="auth-submit">
+          <i class="fa-solid fa-user-plus"></i>
+          Create Account
+        </button>
+
+        <p class="auth-message" id="registerMessage"></p>
+      </form>
+    </div>
+  </section>
+
+  <div class="app-container" id="appContainer">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Academia.</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#" class="nav-link active" data-target="dashboard">
+          <i class="fa-solid fa-grid-2"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-link" data-target="courses">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Courses</span>
+        </a>
+        <a href="#" class="nav-link" data-target="schedule">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>Schedule</span>
+        </a>
+        <a href="#" class="nav-link" data-target="assignments">
+          <i class="fa-solid fa-tasks"></i>
+          <span>Assignments</span>
+        </a>
+        <a href="#" class="nav-link" data-target="analytics">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Performance</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Avatar">
+          <div class="user-info">
+            <h4 id="sidebarUserName">Alex Morgan</h4>
+            <p id="sidebarUserCourse">Computer Science '26</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search courses, assignments, topics...">
+        </div>
+
+        <div class="header-actions">
+          <button class="icon-btn" id="themeToggle" title="Toggle Dark Mode">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          
+          <div class="dropdown">
+            <button class="icon-btn" id="notifBtn">
+              <i class="fa-solid fa-bell"></i>
+              <span class="badge"></span>
+            </button>
+            <div class="dropdown-menu" id="notifDropdown">
+              <div class="dropdown-header">
+                <h3>Notifications</h3>
+                <a href="#">Mark all as read</a>
+              </div>
+              <ul class="notif-list">
+                <li class="unread">
+                  <i class="fa-solid fa-exclamation-circle text-warning"></i>
+                  <div>
+                    <p><strong>Database Systems Quiz</strong> due in 2 hours</p>
+                    <span>10 mins ago</span>
+                  </div>
+                </li>
+                <li>
+                  <i class="fa-solid fa-check-circle text-success"></i>
+                  <div>
+                    <p>Grade posted for <strong>Web Dev Project</strong>: A+</p>
+                    <span>2 hours ago</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="profile-pill">
+            <img id="headerAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Avatar">
+            <span id="headerUserName">Alex</span>
+          </div>
+          <button class="logout-btn" id="logoutBtn" title="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="content-body">
+        
+        <!-- DASHBOARD VIEW -->
+        <div class="view-panel active" id="view-dashboard">
+          
+          <!-- Banner -->
+          <div class="welcome-banner">
+            <div class="banner-text">
+              <h1 id="welcomeTitle">Welcome back, Alex! 👋</h1>
+              <p>You have 3 assignments due this week and an upcoming midterm. Keep up the momentum!</p>
+            </div>
+            <div class="banner-stat">
+              <div class="stat-circle">
+                <span>3.85</span>
+              </div>
+              <label>Current GPA</label>
+            </div>
+          </div>
+
+          <!-- Quick Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon bg-purple">
+                <i class="fa-solid fa-book"></i>
+              </div>
+              <div class="stat-details">
+                <h3>5</h3>
+                <p>Enrolled Courses</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon bg-blue">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div class="stat-details">
+                <h3>14.5 hrs</h3>
+                <p>Study Time This Week</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon bg-green">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+              <div class="stat-details">
+                <h3>92%</h3>
+                <p>Attendance Rate</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon bg-orange">
+                <i class="fa-solid fa-spinner"></i>
+              </div>
+              <div class="stat-details">
+                <h3>4</h3>
+                <p>Pending Tasks</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Grid -->
+          <div class="dashboard-grid">
+            
+            <!-- Left Column: Courses & Chart -->
+            <div class="grid-main">
+              <div class="section-card">
+                <div class="card-header">
+                  <h2>Active Courses</h2>
+                  <a href="#" class="link-btn switch-tab" data-target="courses">View All</a>
+                </div>
+                
+                <div class="course-cards-list">
+                  <div class="course-item">
+                    <div class="course-color" style="background: #4f46e5;"></div>
+                    <div class="course-info">
+                      <h4>Data Structures & Algorithms</h4>
+                      <p>CS301 • Prof. Alan Turing</p>
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                      </div>
+                    </div>
+                    <span class="grade">A</span>
+                  </div>
+
+                  <div class="course-item">
+                    <div class="course-color" style="background: #10b981;"></div>
+                    <div class="course-info">
+                      <h4>Web Application Development</h4>
+                      <p>CS305 • Prof. Sarah Connor</p>
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 92%;"></div>
+                      </div>
+                    </div>
+                    <span class="grade">A+</span>
+                  </div>
+
+                  <div class="course-item">
+                    <div class="course-color" style="background: #f59e0b;"></div>
+                    <div class="course-info">
+                      <h4>Database Management Systems</h4>
+                      <p>CS310 • Prof. Michael Stone</p>
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%;"></div>
+                      </div>
+                    </div>
+                    <span class="grade">B+</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Study Activity Chart -->
+              <div class="section-card">
+                <div class="card-header">
+                  <h2>Study Activity (Hours)</h2>
+                  <select class="select-sm">
+                    <option>This Week</option>
+                    <option>Last Week</option>
+                  </select>
+                </div>
+                <div class="chart-container">
+                  <canvas id="activityChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Timer & Upcoming Deadlines -->
+            <div class="grid-side">
+              
+              <!-- Pomodoro Timer -->
+              <div class="section-card timer-card">
+                <h3>Focus Timer</h3>
+                <div class="timer-display" id="timer">25:00</div>
+                <div class="timer-controls">
+                  <button class="btn btn-primary" id="startTimerBtn"><i class="fa-solid fa-play"></i> Start</button>
+                  <button class="btn btn-secondary" id="resetTimerBtn"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                </div>
+              </div>
+
+              <!-- Upcoming Deadlines -->
+              <div class="section-card">
+                <div class="card-header">
+                  <h2>Deadlines</h2>
+                </div>
+                <div class="deadline-list">
+                  <div class="deadline-item urgency-high">
+                    <div class="date-badge">
+                      <span class="day">24</span>
+                      <span class="month">Oct</span>
+                    </div>
+                    <div class="deadline-details">
+                      <h4>Algorithm Analysis Paper</h4>
+                      <p>CS301 • 11:59 PM</p>
+                    </div>
+                  </div>
+
+                  <div class="deadline-item urgency-med">
+                    <div class="date-badge">
+                      <span class="day">26</span>
+                      <span class="month">Oct</span>
+                    </div>
+                    <div class="deadline-details">
+                      <h4>SQL Midterm Exam</h4>
+                      <p>CS310 • 10:00 AM</p>
+                    </div>
+                  </div>
+
+                  <div class="deadline-item">
+                    <div class="date-badge">
+                      <span class="day">29</span>
+                      <span class="month">Oct</span>
+                    </div>
+                    <div class="deadline-details">
+                      <h4>UI/UX Redesign Submission</h4>
+                      <p>CS305 • 05:00 PM</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- COURSES VIEW -->
+        <div class="view-panel" id="view-courses">
+          <div class="section-card">
+            <h2>Enrolled Courses Overview</h2>
+            <p>Manage and view syllabus, materials, and course records.</p>
+            <div class="courses-grid mt-20">
+              <div class="course-card">
+                <div class="course-card-banner bg-purple">
+                  <span>CS301</span>
+                </div>
+                <div class="course-card-body">
+                  <h3>Data Structures & Algorithms</h3>
+                  <p>Prof. Alan Turing</p>
+                  <div class="course-meta">
+                    <span><i class="fa-solid fa-users"></i> 42 Students</span>
+                    <span><i class="fa-solid fa-star"></i> 4.9</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="course-card">
+                <div class="course-card-banner bg-blue">
+                  <span>CS305</span>
+                </div>
+                <div class="course-card-body">
+                  <h3>Web Development</h3>
+                  <p>Prof. Sarah Connor</p>
+                  <div class="course-meta">
+                    <span><i class="fa-solid fa-users"></i> 38 Students</span>
+                    <span><i class="fa-solid fa-star"></i> 4.8</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="course-card">
+                <div class="course-card-banner bg-green">
+                  <span>CS310</span>
+                </div>
+                <div class="course-card-body">
+                  <h3>Database Systems</h3>
+                  <p>Prof. Michael Stone</p>
+                  <div class="course-meta">
+                    <span><i class="fa-solid fa-users"></i> 55 Students</span>
+                    <span><i class="fa-solid fa-star"></i> 4.7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCHEDULE VIEW -->
+        <div class="view-panel" id="view-schedule">
+          <div class="section-card">
+            <h2>Weekly Schedule</h2>
+            <div class="schedule-table-wrapper mt-20">
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>09:00 AM</td>
+                    <td class="has-class bg-light-purple">CS301 (Lec)</td>
+                    <td>-</td>
+                    <td class="has-class bg-light-purple">CS301 (Lec)</td>
+                    <td>-</td>
+                    <td class="has-class bg-light-green">CS310 (Lab)</td>
+                  </tr>
+                  <tr>
+                    <td>11:00 AM</td>
+                    <td>-</td>
+                    <td class="has-class bg-light-blue">CS305 (Lec)</td>
+                    <td>-</td>
+                    <td class="has-class bg-light-blue">CS305 (Lec)</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td>02:00 PM</td>
+                    <td class="has-class bg-light-green">CS310 (Lec)</td>
+                    <td>-</td>
+                    <td class="has-class bg-light-purple">CS301 (Lab)</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASSIGNMENTS VIEW -->
+        <div class="view-panel" id="view-assignments">
+          <div class="section-card">
+            <div class="card-header">
+              <h2>Task & Assignment Tracker</h2>
+              <button class="btn btn-primary" id="addTaskBtn"><i class="fa-solid fa-plus"></i> Add Task</button>
+            </div>
+            
+            <div class="todo-input-group mt-20">
+              <input type="text" id="taskInput" placeholder="Enter a new assignment or study task...">
+              <button class="btn btn-primary" id="confirmAddTask">Add</button>
+            </div>
+
+            <ul class="task-list mt-20" id="taskList">
+              <li class="task-item">
+                <input type="checkbox" class="task-checkbox">
+                <span class="task-title">Complete Data Structures Homework 4</span>
+                <span class="task-tag bg-purple">CS301</span>
+                <button class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
+              </li>
+              <li class="task-item completed">
+                <input type="checkbox" class="task-checkbox" checked>
+                <span class="task-title">Submit Portfolio HTML/CSS Layout</span>
+                <span class="task-tag bg-blue">CS305</span>
+                <button class="delete-task-btn"><i class="fa-solid fa-trash"></i></button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ANALYTICS VIEW -->
+        <div class="view-panel" id="view-analytics">
+          <div class="section-card">
+            <h2>Academic Performance Analytics</h2>
+            <div class="chart-container mt-20">
+              <canvas id="performanceChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
